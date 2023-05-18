@@ -1,0 +1,93 @@
+{%extends 'superuser-base.html'%}
+
+{%block title%} Testimonials | The Book Wishes Club {%endblock%}
+
+{%block main%}
+<div class="container">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
+        Add New Testimonials
+    </button>
+
+    {% if testimonial_error %}
+    <div class="alert alert-danger mt-3">
+        {{testimonial_error}}
+    </div>
+    {%endif%}
+
+
+
+    <div class="py-3">
+        <div class="row">
+            {%for item in all_testimonials %}
+            <div class="col-lg-4 mb-3">
+                <div class="card inflow">
+                    <div class="card-body">
+                        <div class="content mb-2">
+                            {{item.message}}
+                        </div>
+                        <div class="name-intro mb-2 fst-italic fw-bold">{{item.name}}, {{item.intro}}</div>
+                        <img src="{{item.picture}}" class="rounded-circle"
+                            style="width: 60px; height:60px; object-fit: cover;" alt="">
+
+                        <div class="delete-button d-flex justify-content-end">
+                            <a class="text-danger" type="button" class="btn btn-primary" data-mdb-toggle="modal"
+                                data-mdb-target="#delete_testimonial_{{item.id}}">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delete Confirm Modal -->
+            <!-- Modal -->
+            <div class="modal fade" id="delete_testimonial_{{item.id}}" tabindex="-1"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" data-mdb-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete "{{item.name}}" testimonial?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                            <a href="/superuser/testimonials/{{item.id}}/delete" href="" type="button"
+                                class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {%csrf_token%}
+                    <input type="file" name="picture">
+                    {{testimonial_form}}
+                    <input name="new_testimonial_submit" type="submit" value="Save Testimonial"
+                        class="bg-primary border-0 text-white p-2 px-3 rounded-4">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{%endblock%}

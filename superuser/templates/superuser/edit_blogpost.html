@@ -1,0 +1,20 @@
+{%extends 'superuser-base.html'%}
+
+{%block title%} Edit Blogpost | The Bookwishes Club {%endblock%}
+
+
+{%block main%}
+
+
+<div class="container inflow p-3">
+    <form method="post" action="">
+        {% csrf_token %}
+        {{blogpost_form}}
+        <!-- <img src="" alt="" srcset=""> -->
+
+        <!-- <input type="file" name="" id="" > -->
+        <button type="submit" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">Update</button>
+    </form>
+
+</div>
+{%endblock%}

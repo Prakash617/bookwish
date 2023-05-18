@@ -1,0 +1,24 @@
+{%extends 'superuser-base.html'%} {%block title%} Create Blogpost | The Bookwishes Club {%endblock%} {%block main%}
+
+
+<div class="container inflow p-3">
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %} {{form}}
+             
+
+        {% comment %} <input type="file" id="postImage" name="post_image"> {% endcomment %}
+        <br>
+        <br>
+        <button type="submit" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">Create</button>
+    </form>
+
+</div>
+
+{%endblock%} {% comment %} id_article_body {% endcomment %}
+
+{% block js %}
+
+<script>
+
+</script>
+    {%endblock%}

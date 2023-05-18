@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block title %} Introductory Session Feedback Form | The Bookwishes Club {% endblock %}
+
+
+<!--  -->
+{% block css%}
+<style>
+.bg-grey{
+  background-color: #ebebeb;
+}
+
+strong{
+  color: var(--native-primary)
+}
+</style>
+{%endblock%}
+
+<!--  -->
+
+{% block main %}
+
+{% if error %}
+<div class="col-lg-12 mt-5">
+  <div class="alert alert-danger small">
+    {{error}}
+  </div>
+</div>
+{% endif %}
+
+{% if success %}
+<div class="col-lg-12 mt-5">
+  <div class="alert alert-success small">
+    {{success}}
+  </div>
+</div>
+{% endif %}
+{% if event.image %}
+<div class="bg-grey">
+  
+  <img src="{{ event.picture.url }}" alt="Event Picture"  style="object-fit:contain; width: 100%; height: 21rem;">
+ 
+</div>
+{% endif %}
+
+<div class="container py-5">
+
+  
+
+  <h1>{{event.event_name}}</h1>
+  <p>
+    <strong><i class="fa-solid fa-tag text-danger"></i></strong> {{ event.event_topic }}
+    <br> 
+    <strong><i class="fa-solid fa-location-dot text-danger"></i></strong> {{ event.event_location }} <br>
+
+    {% if event.event_location_link %}
+    <a href="{{ event.event_location_link }}" target="_blank">View on Map</a>
+    {%endif%}
+  </p>
+  
+  <p> <strong>Description</strong> <br> {{event.description}}</p>
+
+<br>
+  <div class="row align-items-end mb-5">
+    <div class="col-lg-4">
+      <p><strong>{{ event.event_start_date }} - {{event.event_start_time}}</strong> <br> Event Starts On</p>
+    </div>
+    <div class="col-lg-4">
+      <p><strong>{{ event.event_end_date }} - {{event.event_end_time}}</strong> <br> Event Ends On</p>
+    </div>
+    <!-- <div class="col-lg-4">
+      <div>
+        <strong class="fs-4">
+        {{ registrations_count }}
+      </strong>
+      </div>
+      <p>Total Registration</p>
+    </div> -->
+  </div>
+
+  
+  
+  
+  
+
+
+
+
+  
+  <form method="POST" class="row g-3">
+    {% csrf_token %}
+
+    <div class="col-md-6">
+      <label for="name" class="form-label">Name:</label>
+      <input type="text" name="name" id="name" class="form-control" required>
+    </div>
+
+    <div class="col-md-6">
+      <label for="email" class="form-label">Email:</label>
+      <input type="email" name="email" id="email" class="form-control" required>
+    </div>
+
+    <div class="col-md-6">
+      <label for="phone" class="form-label">Phone:</label>
+      <input type="tel" name="phone" id="phone" class="form-control" required>
+    </div>
+
+    <div class="col-md-6">
+      <label for="location" class="form-label">Location:</label>
+      <input type="text" name="location" id="location" class="form-control" required>
+    </div>
+
+    <div class="col-md-6">
+      <label for="dob" class="form-label">Date of birth:</label>
+      <input type="date" name="dob" id="dob" class="form-control" required>
+    </div>
+
+    <div class="col-md-6">
+      
+      <label for="gender" class="form-label">Gender:</label>
+      <div>
+        <input type="radio" name="gender" id="male" value="male" class="form-check-input" required>
+        <label for="male" class="form-check-label">Male</label>
+      </div>
+
+      <div>
+        <input type="radio" name="gender" id="female" value="female" class="form-check-input" required>
+        <label for="female" class="form-check-label">Female</label>
+      </div>
+
+      <div>
+        <input type="radio" name="gender" id="other" value="other" class="form-check-input" required>
+        <label for="female" class="form-check-label">Other</label>
+      </div>
+
+    </div>
+
+    
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+  </form>
+</div>
+
+{% endblock %}

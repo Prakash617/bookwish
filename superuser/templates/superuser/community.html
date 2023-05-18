@@ -1,0 +1,284 @@
+{% extends 'superuser-base.html' %}
+
+{% block title %} Communities | The Book Wishes Club {%endblock%}
+
+{% block main %}
+
+
+<div class="container p-5">
+
+
+    {% comment %} <div class="button-section">
+        <div class="btn btn-primary">
+            <i class="fa-solid fa-plus"></i> Add a New Community
+        </div>
+    </div> {% endcomment %}
+    {% if community_error %}
+    {% if community_error == "Successfully Created" %}
+        <div class="alert alert-success" id = "toast" role="alert">
+            {{community_error}}
+        </div>
+    {% else %}
+        <div class="alert alert-danger" id = "toast" role="alert">
+            {{community_error}}
+        </div>
+    {% endif %}
+    {% endif %}
+    <div class="d-flex justify-content-between">
+
+        <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
+            <i class="fa-solid fa-plus"></i> Add a New Community
+        </button>
+        {% if user.is_superuser %}
+        <a href="{% url 'ClubBadegeView' %}">
+            <div class="btn btn-sm btn-success p-2">
+               Download all communities info CSV<i class="fa fa-download " aria-hidden="true"></i> </div>
+        </a>
+       
+        {% endif %}
+    </div>
+
+
+    {% comment %} model start {% endcomment %}
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {%csrf_token%}
+
+                    {{community_form}}
+
+                    {% comment %} <label for="upload_file">Product Images (At max. 3)</label>
+                    <input id="upload_file" type="file" class="mb-3" name="product_pictures" multiple> {% endcomment %}
+
+                    <input name="community_submit" type="submit" value="Save Community"
+                        class="bg-primary border-0 text-white p-2 px-3 rounded-4">
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+    {% comment %} modal end {% endcomment %}
+
+
+    <style>
+        td {
+            text-align: center;
+        }
+    </style>
+    <!-- Other Datas -->
+    <div class="container-fluid rounded-9 tools mt-4 ">
+        <hr>
+        <div class="h3 fw-bold text-primary">Community Stats</div>
+
+        <div class="row rounded-9 mb-5 mt-4">
+
+            <div class="col-lg-3">
+                <div class="card text-center">
+                    <div class="bubbles bg-danger" style="bottom: -12px; right: 42%;"></div>
+                    <div class="card-body">
+                        <div class="fw-bold text-danger">
+                            Total <br> Communities
+                        </div>
+                        <div class="fs-1 fw-bold text-danger">
+                            {{total_clubs}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% comment %} 
+            <div class="col-lg-3">
+                <div class="card text-center">
+                    <div class="bubbles bg-success" style="bottom: -12px; right: 42%;"></div>
+                    <div class="card-body">
+                        <div class="fw-bold text-success">
+                            Active Communities
+                        </div>
+                        <div class="fs-1 fw-bold text-success">
+                            3
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            {% endcomment %}
+
+        </div>
+
+    </div>
+
+
+    <!--Section: Community Summary-->
+    <section class="mb-4 mt-5">
+        <div class="card inflow">
+            <div class="card-header text-center py-3">
+                <h5 class="mb-0 text-center">
+                    <strong>Communities Summary</strong>
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="orders" class="table table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                {% comment %} <th scope="col">Weekly badges</th> {% endcomment %}
+                                <th scope="col">Community Name</th>
+                                <th scope="col">Total Members</th>
+                                <th scope="col">Total Posts</th>
+                                <th scope="col">Total Step Walked</th>
+                                <th scope="col">Total Pages Read</th>
+                                <th scope="col">Relationship</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for d in data %}
+                            <tr>
+                                
+                                {% comment %} <td>
+                                    <a href="{% url 'community_weekly_badges_csv' d.club_id %}">
+                                        <div class="btn btn-sm btn-success">
+                                        Download CSV<i class="fa fa-download " aria-hidden="true"></i> </div>
+                                    </a>
+                                </td> {% endcomment %}
+                                <td>{{d.name}}</td>
+                                <td>{{d.total_members}}</td>
+                                <td>{{d.total_posts}}</td>
+                                {%if d.total_steps != 0 %}
+                                <td>{{d.total_steps}} km</td>
+                                {% else %}
+                                <td>0 km</td>
+                                {% endif %}
+                                <td>{{d.total_pages}} pages</td>
+                                <td>
+                                    <span class="me-3 badge badge-success"> +{{d.plus_points}}</span>
+                                    <span class="me-3 badge badge-danger"> -{{d.neg_points}}</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Section: Community Summary-->
+
+
+    <!-- Section: Main chart -->
+    <section class="mb-4 pt-5">
+        <div class="card inflow">
+            <div class="card-header py-3">
+                <h5 class="mb-0 text-center"><strong>Communities Over Time</strong></h5>
+            </div>
+            <div class="card-body">
+                <canvas class="my-4 w-100" id="myChart" height="380"></canvas>
+            </div>
+        </div>
+    </section>
+    <!-- Section: Main chart -->
+
+
+
+    <!-- Modals Section -->
+    <div class="modals">
+        <!-- Modal -->
+        <div class="modal fade inflow" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content inflow">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Order Details</h5>
+                        <button type="button" class="btn-close" data-mdb-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <strong>Customer Name:</strong> Travis Derika
+                        <br>
+                        <strong>Customer Phone:</strong> +977-9810423453
+                        <br>
+                        <strong>Delivery Address:</strong> New Baneshwor, Kathmandu, Nepal 44600
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+{{club_by_month}}
+
+{%endblock%}
+
+
+
+{%block js%}
+<script>
+    $(function () {
+
+        $(".list-group-item").each(function () {
+            $(".active").removeClass(".active");
+            if ($(this).text().toLowerCase().includes("communities")) {
+                $(this).addClass("active");
+            }
+        });
+
+        $(document).ready(function () {
+            $('#orders').DataTable();
+        });
+
+
+
+        // Graph
+        var ctx = document.getElementById("myChart");
+
+        var myChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: [
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                ],
+                datasets: [
+                    {
+                        label: "Community Count",
+                        data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+                        lineTension: 0.3,
+                        backgroundColor: "transparent",
+                        borderColor: "#d44a26",
+                        borderWidth: 4,
+                        pointBackgroundColor: "#d44a26",
+                    },
+                ],
+            },
+            options: {
+                scales: {
+                    yAxes: [
+                        {
+                            ticks: {
+                                beginAtZero: false,
+                            },
+                        },
+                    ],
+                },
+                legend: {
+                    display: false,
+                },
+            },
+        });
+    })
+    $('#toast').delay(3000).fadeOut('slow');
+</script>
+{%endblock%}

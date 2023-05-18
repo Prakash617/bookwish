@@ -1,0 +1,58 @@
+<div class="logo"> <img
+        src="https://www.thebookwishesclub.com/media/medias/bookwishes_logo_aRkDEdg.jpg"
+        style="width:100%;" alt=""> </div>
+<div class="navigation ps-2 mt-3">
+    <ul class="list-unstyled">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About Us</a></li>
+        <li><a href="/courses">Courses</a></li>
+        <li><a href="/consultation-request">Consultation Request</a></li>
+    </ul>
+    <hr>
+    <ul class="list-unstyled">
+        <li><a href="/blog">Hot Topics</a></li>
+        <!-- <li><a href="/helpful-forms">Helpful Forms</a></li> -->
+        <li><a href="/resources">Link & Resoucres</a></li>
+        <li><a href="/faqs">Common Questions</a></li>
+    </ul>
+    <hr>
+    <ul class="list-unstyled">
+        <li><a href="/shop"><i class="fa-solid fa-shop"></i> Merchandise Shop</a></li>
+    </ul>
+    <hr>
+    <div class="social d-flex justify-content-around">
+        {% if urls.fb_url != ''%}
+        <i class="fa-brands fa-facebook-f"></i>
+        {% endif %}
+
+        {% if urls.in_url != ''%}
+        <i class="fa-brands fa-instagram"></i>
+        {% endif %}
+
+        {% if urls.ln_url != ''%}
+        <i class="fa-brands fa-linkedin-in"></i>
+        {% endif %}
+
+        {% if urls.yt_url != ''%}
+        <i class="fa-brands fa-youtube"></i>
+        {% endif %}
+
+        {% if urls.app_url != ''%}
+        <i class="fa-brands fa-android"></i>
+        {% endif %}
+    </div>
+
+    <div class="link mt-4">
+        <ul class="list-unstyled d-flex">
+            <li>
+                <a href="/privacy-policy" class="text-decoration-underline small"><small>Privacy Policy</small></a>
+            </li>
+            <span class="text-danger px-2"> | </span>
+            <li>
+                <a href="/terms-and-conditions" class="text-decoration-underline small"><small>Terms and Conditions</small></a>
+            </li>
+        </ul>
+    </div>
+
+
+</div>

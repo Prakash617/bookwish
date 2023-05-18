@@ -1,0 +1,270 @@
+{% extends 'superuser-base.html' %} {% block title %} User Management | The Book Wishes Club {%endblock%} {% block main %}
+
+<div class="container p-5">
+
+
+    <!-- Other Datas -->
+    <div class="container-fluid rounded-9 tools mt-4 ">
+        <hr>
+        <div class="h3 fw-bold text-primary">Users Stats</div>
+
+
+        <style>
+            td {
+                padding: 1rem 1rem !important;
+            }
+        </style>
+        <div class="row rounded-9 mb-5 mt-4">
+
+            <div class="col-lg-3">
+                <div class="card text-center">
+                    <div class="bubbles bg-danger" style="bottom: -12px; right: 42%;"></div>
+                    <div class="card-body">
+                        <div class="fw-bold text-danger">
+                            Total Users
+                        </div>
+                        <div class="fs-1 fw-bold text-danger">
+                            {{total_users}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="card text-center">
+                    <div class="bubbles bg-success" style="bottom: -12px; right: 42%;"></div>
+                    <div class="card-body">
+                        <div class="fw-bold text-success">
+                            Active Users
+                        </div>
+                        <div class="fs-1 fw-bold text-success">
+                            {{total_active_users}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--Section: Users Summary-->
+    <section class="mb-4 mt-5">
+        <div class="card inflow">
+            <div class="card-header text-center py-3">
+                <h5 class="mb-0 text-center">
+                    <strong>Users</strong>
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="orders" class="table table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                {% if user.is_superuser %}
+                                <th scope="col">Download CSV</th>
+                                {% endif %}
+                                <th scope="col">User Id</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">DOB</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Community</th>
+                                <th scope="col">Gender</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Referral Code</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {% for obj in update_user %}
+                            <tr>
+                                <td>
+                                    <div class="btn btn-sm" data-mdb-toggle="modal" data-mdb-target="#exampleModal{{forloop.counter}}">See Details</div>
+                                </td>
+                                {% if user.is_superuser %}
+                                <td>
+                                    <a href="{% url 'export_csv' obj.user.id %}">
+                                        <div class="btn btn-sm btn-primary">
+                                            Report</div>
+                                    </a>
+                                </td>
+                                {% endif %}
+                                <td>
+                                    {{obj.user.id}}
+                                </td>
+                                
+                                <td>{{obj.user.username}}</td>
+                                <td>{{obj.user.first_name}}</td>
+                                <td>{{obj.user.last_name}}</td>
+                                <td>{{obj.user.email}}</td>
+                                <td>{{obj.user.dob}}</td>
+                                <td>{{obj.user.phone}}</td>
+                                <td>{{obj.user.club.club_name}}</td>
+                                <td>{{obj.user.gender}}</td>
+                                <td>{{obj.user.location}}</td>
+                                <td>{{obj.refer}}</td>
+                            </tr>
+                            {% endfor %}
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Section: Users Summary-->
+
+
+    <!-- Modals Section -->
+    {% for u in users %}
+    <div class="modals">
+
+        <style>
+            .fw-bold {
+                color: var(--mdb-primary);
+            }
+        </style>
+        <!-- Modal -->
+
+
+
+        <div class="modal fade inflow" id="exampleModal{{forloop.counter}}" tabindex="-1" aria-labelledby="exampleModalLabel{{forloop.counter}}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 700px">
+                <div class="modal-content inflow">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">User Details</h5>
+                        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            
+
+                            <div class="col-lg-4 mb-3">
+                                <small>UserId</small>
+                                <div class="fw-bold">
+                                    {{u.id}}
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 mb-3">
+                                <small>Username</small>
+                                <div class="fw-bold">
+                                    {{u.username}}
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 mb-3">
+                                <small>Email</small>
+                                <div class="fw-bold">
+                                    {{u.email}}
+
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-4 mb-3">
+                                <small>First Name</small>
+                                <div class="fw-bold">
+                                    {{u.first_name}}
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 mb-3">
+                                <small>Last Name</small>
+                                <div class="fw-bold">
+                                    {{u.last_name}}
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {%endfor%}
+
+
+    <!-- Section: Main chart -->
+    <section class="mb-4 pt-5">
+        <div class="card inflow">
+            <div class="card-header py-3">
+                <h5 class="mb-0 text-center"><strong>User Growth Chart</strong></h5>
+            </div>
+            <div class="card-body">
+                <canvas class="my-4 w-100" id="myChart" height="380"></canvas>
+            </div>
+        </div>
+    </section>
+    <!-- Section: Main chart -->
+
+</div>
+
+{{users_by_month}}
+
+
+{%endblock%}
+{%block js%}
+<script>
+    $(function() {
+
+        $(".list-group-item").each(function() {
+            $(".active").removeClass(".active");
+            if ($(this).text().toLowerCase().includes("management")) {
+                $(this).addClass("active");
+            }
+        });
+
+        $(document).ready(function() {
+            $('#orders').DataTable();
+        });
+
+
+        // Graph
+        var ctx = document.getElementById("myChart");
+
+        var myChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: [
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                ],
+                datasets: [{
+                    label: "Users",
+                    data: [15339, 21345, 23489, 24092, 12034],
+                    lineTension: 0.3,
+                    backgroundColor: "transparent",
+                    borderColor: "#d44a26",
+                    borderWidth: 4,
+                    pointBackgroundColor: "#d44a26",
+                }, ],
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false,
+                        },
+                    }, ],
+                },
+                legend: {
+                    display: false,
+                },
+            },
+        });
+
+    })
+</script>
+{%endblock%}

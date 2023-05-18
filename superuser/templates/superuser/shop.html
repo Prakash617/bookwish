@@ -1,0 +1,104 @@
+{%extends 'superuser-base.html'%}
+
+{%block title%} Shop Settings | The Bookwishes Club {%endblock%}
+
+{%block main%}
+<div class="container">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
+        Add New Product
+    </button>
+
+
+    <div class="my-4">
+        <div class="row">
+
+            {% for product in all_products %}
+
+            <div class="col-lg-4 mb-5">
+                <div class="card border position-relative">
+                    <img src="{{product.product_photos.0}}" alt=""
+                        style="width: 100%; height:186px;object-fit: contain;">
+                    <div class="card-body text-center">
+                        <div class="title fw-bold">
+                            {{product.product_name}}
+                        </div>
+                        <div class="price fs-3 my-3">
+                            Rs. {{product.product_price}}
+                
+                        </div>
+                        <div class="delete-button position-absolute" style="top:-0.6rem; right:-0.6rem;">
+                            <a class="text-danger bg-white shadow border border-danger px-3 py-2 rounded-6"
+                                type="button" data-mdb-toggle="modal" data-mdb-target="#delete_testimonial_{{product.id}}">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delete Confirm Modal -->
+            <!-- Modal -->
+            <div class="modal fade" id="delete_testimonial_{{product.id}}" tabindex="-1"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" data-mdb-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete product "{{product.product_name}}"?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                            <a href="/superuser/shop/{{product.id}}/delete" href="" type="button"
+                                class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+
+        </div>
+    </div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {%csrf_token%}
+
+                    {{product_form}}
+
+                    <label for="upload_file">Product Images (At max. 3)</label>
+                    <input id="upload_file" type="file" class="mb-3" name="product_pictures" multiple>
+
+                    <input name="product_submit" type="submit" value="Save Product"
+                        class="bg-primary border-0 text-white p-2 px-3 rounded-4">
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

@@ -1,0 +1,63 @@
+{%extends 'superuser-base.html'%}
+
+{%block title%} Post Report | The Bookwishes Club {%endblock%}
+
+
+{%block main%}
+<div class="container inflow p-3">
+
+    <table id="table_id" class="display">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>reported_by</th>
+                <th>post</th>
+                <th>report_category</th>
+                <th>comment</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in details %}
+            <tr>
+                <td>{{d.cr_obj.id}}</td>
+                <td>{{d.cr_obj.reported_by.first_name}} {{d.reported_by.last_name}}</td>
+                <td>
+                <img src="{{d.postMedia}}" class="rounded" alt="{{d.postMedia}}" width="200" />
+                </td>
+                <td>{{d.cr_obj.report_category}}</td>
+                <td>{{d.cr_obj.comment}}</td>
+                <td>       
+                    
+                <a class="text-danger" type="button" class="btn btn-primary" data-mdb-toggle="modal"
+                data-mdb-target="#delete_common_question_{{d.cr_obj.id}}">
+                <div class="btn btn-sm btn-danger">
+                    Delete</div>
+            </a>
+
+
+            </td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+
+
+{%endblock%}
+
+{%block js%}
+<script>
+    $(function () {
+        $(".list-group-item").each(function () {
+            $(".active").removeClass(".active");
+            if ($(this).text().toLowerCase().includes("comment report")) {
+                $(this).addClass("active");
+            }
+        });
+
+    });
+</script>
+{%endblock%}

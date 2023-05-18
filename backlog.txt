@@ -1,0 +1,6 @@
+0. Migrations of customuser
+1. Postgres sql setup
+2. Setup Postman
+3. Authentication API finalization and testing
+4. Foreign key serialization
+5. 

@@ -1,0 +1,119 @@
+{%extends 'superuser-base.html'%}
+{% load static %}
+
+{%block title%} Add Event | The Bookwishes Club {%endblock%}
+
+
+{%block main%}
+<h1>Add Event</h1>
+<form method="post" enctype="multipart/form-data" class="form">
+    {% csrf_token %}
+    <div class="form-group mb-3">
+        <label for="event_name">Event Name</label>
+        <input type="text" name="event_name" class="form-control" required>
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="event_start_date">Start Date</label>
+        <input type="date" name="event_start_date" class="form-control" required>
+    </div>
+    <div class="form-group mb-3">
+        <label for="event_start_time">Start Time</label>
+        <input type="time" name="event_start_time" class="form-control" required>
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="event_end_date">End Date</label>
+        <input type="date" name="event_end_date" class="form-control" required>
+    </div>
+    <div class="form-group mb-3">
+        <label for="event_end_time">End Time</label>
+        <input type="time" name="event_end_time" class="form-control" required>
+    </div>
+    
+    
+    <div class="form-group mb-3">
+        <label for="event_topic">Event Topic</label>
+        <input type="text" name="event_topic" class="form-control">
+    </div>
+    <div class="form-group mb-3">
+        <label for="event_location">Location</label>
+        <input type="text" name="event_location" class="form-control" required>
+    </div>
+    <div class="form-group mb-3">
+        <label for="event_location_link">Event Location Link</label>
+        <textarea name="event_location_link" class="form-control"></textarea>
+    </div>
+    <div class="form-group mb-3">
+        <label for="picture">Picture</label>
+        <input type="file" name="picture" class="form-control-file">
+    </div>
+    <div class="form-group mb-3">
+        <label for="description">Description</label>
+        <textarea name="description" class="form-control"></textarea>
+    </div>
+    <div class="form-group mb-3">
+        <label for="participant_numbers">Participant Numbers</label>
+        <input type="number" name="participant_numbers" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Create Event</button>
+</form>
+
+<hr>
+
+<h1>Event List</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Event Name</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Topic</th>
+            <th>Location</th>
+            <th>event_location_link</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for event in events %}
+        <tr>
+            <td>{{ event.event_name }}</td>
+            <td>{{ event.event_start_time }}</td>
+            <td>{{ event.event_end_time }}</td>
+            <td>{{ event.event_start_date }}</td>
+            <td>{{ event.event_end_date }}</td>
+            <td>{{ event.event_topic }}</td>
+            <td>{{ event.event_location }}</td>
+            <td>{{ event.event_location_link }}</td>
+            <td>{{ event.description }}</td>
+            <td>
+                <form method="post" action="{% url 'delete_event' event.id %}">
+                    {% csrf_token %}
+                    <input type="submit" value="Delete">
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="9">No events yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

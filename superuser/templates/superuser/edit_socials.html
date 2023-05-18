@@ -1,0 +1,17 @@
+{%extends 'superuser-base.html'%}
+
+{%block title%} Edit Socials | The Bookwishes Club {%endblock%}
+
+
+{%block main%}
+
+
+<div class="container inflow p-3">
+    <form method="post" action="">
+        {% csrf_token %}
+        {{Socials_form}}
+        <button type="submit" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">Update</button>
+    </form>
+
+</div>
+{%endblock%}

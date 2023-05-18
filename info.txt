@@ -1,0 +1,17 @@
+1. Refer and Club serializers also create a 
+user when a post request is to be made.
+But we are discarding this assumption
+and so no use. 
+
+2. Visit this to access pgadmin 
+http://127.0.0.1/pgadmin4/browser/
+
+3. In case when your migration history shows a table was already created but you don't have the real table. Do following
+python manage.py migrate --fake sessions zero
+# then your sessions migrate will be
+python manage.py showmigrations
+sessions
+ [ ] 0001_initial
+# then migrate with --fake-initial again
+python manage.py migrate --fake-initial
+

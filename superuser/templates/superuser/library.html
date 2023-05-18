@@ -1,0 +1,109 @@
+{% extends 'superuser-base.html' %}
+
+{% block title %} Library | The Book Wishes Club {%endblock%}
+
+{% block main %}
+
+<div class="container p-5">
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="textarea inflow p-4">
+                <div class="fw-bold mb-2 fs-4">Enter Books </div>
+                <div class="mb-3">
+                    {{form}}
+                </div>
+                <input class="btn btn-primary btn-lg" name="Submit" type="submit"  value="Submit">
+            </div>
+
+        </form>
+
+
+
+    <style>
+        td {
+            padding: 1rem !important;
+        }
+    </style>
+
+    <!--Section: Notifications Summary-->
+    <section class="mb-4 mt-5">
+        <div class="card inflow">
+            <div class="card-header text-center py-3">
+                <h5 class="mb-0 text-center">
+                    <strong>Books</strong>
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="orders" class="table table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                <th scope="col">Book Id</th>
+                                <th scope="col">Book Name</th>
+                                <th scope="col">Book Category</th>
+                                <th scope="col">Action</th>
+
+                                
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            {% for book in book_data %}
+                            <tr>
+                                <td>{{book.id}}</td>
+                                <td>{{book.title}}</td>
+                                <td>{{book.category.name}}</td>
+                                <td>
+                                    <form action="" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="book_id" value="{{book.id}}">
+                                        <input type="submit" name="delete_book" value="Delete" class="btn btn-sm btn-danger">
+                                    </form>
+                                </td>
+                            </tr>
+                            {%endfor%}
+                        
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Section: Notifications Summary-->
+
+</div>
+
+
+{% for message in messages %}
+<div class="alert  {{ message.tags }} position-fixed  end-0 p-4 px-5 me-3 " style ="z-index:{{ forloop.counter }};top:5rem; border-radius:4px; " id = "toast" role="alert">
+  <p>  {{ message | safe }} </p>
+</div>
+
+{% endfor %}
+
+
+
+{%endblock%}
+
+
+
+{%block js%}
+<script>
+    $('#toast').delay(3000).fadeOut('fast');
+    $(function () {
+
+        $(".list-group-item").each(function () {
+            $(".active").removeClass(".active");
+            if ($(this).text().toLowerCase().includes("library")) {
+                $(this).addClass("active");
+            }
+        });
+
+        $(document).ready(function () {
+            $('#orders').DataTable();
+        });
+    })
+</script>
+{%endblock%}

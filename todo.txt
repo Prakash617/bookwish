@@ -1,0 +1,38 @@
+Backend Database Design
+
+## Accounts app
+User
+
+## Club App
+Club
+Refer
+Badge
+Leaderboard
+Other API data 
+Report
+
+## Feed App ( https://towardsdatascience.com/build-a-social-media-website-using-django-setup-the-project-part-1-6e1932c9f221 )
+( https://github.com/shubham1710/ByteWalk )
+Post
+Comment
+Like
+
+Story (https://github.com/ramon82/zuck.js)
+
+## Notification App
+Notifications( https://medium.com/geekculture/add-real-time-notifications-to-your-django-project-6ee2aed38597 )
+{{ASGI, Websocket, channel, redis}}
+Or,
+( https://pypi.org/project/django-notifications-hq/#description )
+
+
+###############################################
+Dajngo-celery
+- for making story inactive after 24 hours (1 day) time difference 
+
+Refer
+- send email to refered user along with the refer code
+
+Social Login
+
+Superuser permission (Shop Communities WebsiteTraffic BlogSection WebsiteSection ShopSection)

@@ -1,0 +1,25 @@
+For social authentication,
+https://django-rest-auth.readthedocs.io/en/latest/installation.html#social-authentication-optional
+https://michaeldel.github.io/posts/django-rest-auth-social-tutorial/
+
+For serializing foreign key
+https://www.sankalpjonna.com/learn-django/representing-foreign-key-values-in-django-serializers
+
+Nested Serialization (with both create and get multiple objects too)
+https://blog.devgenius.io/nested-serializers-in-django-rest-framework-6b36bf011074
+
+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
+
+
+Identify the user running django app:
+ps aux | grep uwsgi
+
+
+read write execute permission to the user to the owner and group of the media and read and execute permissions to others
+sudo chmod -R 775 /opt/bitnami/projects/bookwishes/media/*
+
+Change the owner of the media directory: You can use the chown command to change the owner of the media directory to the user running your Django app. Run the following command:
+sudo chown -R uwsgi:www-data /opt/bitnami/projects/bookwishes/media/
+
+
+

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="container main-content py-5">
+    <div class="container">
+        <h1 class="title fw-bold mb-3">
+            Common Questions
+        </h1>
+        <div class="faqs mt-5">
+            <div class="accordion w-100" id="basicAccordion">
+                {% for question in questions%}
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne{{ forloop.counter }}">
+                        <button class="accordion-button collapsed" type="button"
+                            data-mdb-toggle="collapse" data-mdb-target="#basicAccordionCollapseOne{{ forloop.counter }}"
+                            aria-expanded="false" aria-controls="collapseOne">
+                            {{question.question}}
+                        </button>
+                    </h2>
+                    <div id="basicAccordionCollapseOne{{ forloop.counter }}" class="accordion-collapse collapse"
+                        aria-labelledby="headingOne{{ forloop.counter }}" data-mdb-parent="#basicAccordion" style="">
+                        <div class="accordion-body">
+                            <strong> 
+
+                                {{question.answer | safe }}
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

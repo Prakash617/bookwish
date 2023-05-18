@@ -1,0 +1,375 @@
+{% extends 'superuser-base.html' %} {% block title %} Shop Data | The Book Wishes Club {%endblock%} {% block main %}
+
+
+
+<div class="container p-5">
+
+
+    <div class="button-section">
+        <a href={% url 'shop_admin' %}>
+            <div class="btn btn-primary">
+                <i class="fa-solid fa-plus"></i> Upload a Product
+
+            </div>
+        </a>
+    </div>
+
+    <!-- Other Datas -->
+    <div class="container-fluid rounded-9 tools mt-4 ">
+        <hr>
+        <div class="h3 fw-bold text-primary">Order Statistics (This Year)</div>
+
+        <div class="row rounded-9 mb-5 mt-4">
+
+            <div class="col-lg-3">
+                <div class="card text-center">
+                    <div class="bubbles bg-danger" style="bottom: -12px; right: 42%;"></div>
+                    <div class="card-body">
+                        <div class="fw-bold text-danger">
+                            Total Orders
+                        </div>
+                        <div class="fs-1 fw-bold text-danger">
+                            {{total_order}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="card text-center">
+                    <div class="bubbles bg-success" style="bottom: -12px; right: 42%;"></div>
+                    <div class="card-body">
+                        <div class="fw-bold text-success">
+                            Total Revenue
+                        </div>
+                        <div class="fs-1 fw-bold text-success">
+                            Rs. {{total_revenue}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Other Datas -->
+    <div class="container-fluid rounded-9 tools pt-3 mt-5 pb-3">
+        <hr>
+        <div class="h3 fw-bold text-primary">Today's Stats</div>
+
+        <div class="row rounded-9 mb-5 mt-4">
+
+            <div class="col-lg-3">
+                <div class="card text-center">
+                    <div class="bubbles bg-dark" style="bottom: -12px; right: 42%;"></div>
+                    <div class="card-body">
+                        <div class="fw-bold text-dark">
+                            Total Orders
+                        </div>
+                        <div class="fs-1 fw-bold text-dark">
+                            {{today_total_order}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+           
+
+        </div>
+
+    </div>
+
+
+    <!--Section: Order Summary-->
+    <section class="mb-4 mt-5">
+        <div class="card inflow">
+            <div class="card-header text-center py-3">
+                <h5 class="mb-0 text-center">
+                    <strong>Order Summary</strong>
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="orders" class="table table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                <th scope="col">S.no</th>
+                                <th scope="col">Order Id</th>
+                                <th scope="col">Order Date</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Status</th>
+
+                                <th scope="col">Payment Type</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders%}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>#{{order.id}}</td>
+                                <td>{{order.order_date}}</td>
+                                <td>{{order.quantity}}</td>
+                                <td>
+                                    {% if order.status == 'Unapproved' %}
+                                    <span class="badge badge-danger">Unapproved</span>
+                                    <!--  -->
+                                    {% elif order.status == 'Approved' %}
+                                    <!--  -->
+                                    <span class="badge badge-warning">Approved</span>
+                                    <!--  -->
+                                    {% elif order.status == 'Shipped' %}
+                                    <!--  -->
+                                    <span class="badge badge-success">Shipped</span>
+                                    <!--  -->
+                                    <!--  -->
+                                    {% elif order.status == 'Completed' %}
+                                    <!--  -->
+                                    <span class="badge badge-success">Completed</span>
+                                    {%endif%}
+                                    <!--  -->
+                                </td>
+
+                                <td>
+                                    <span class="badge badge-info">{{order.payment_type}}</span>
+                                </td>
+
+                                <td class="d-flex">
+                                    {% comment %}
+                                    <form method="POST">
+                                        <button type="submit" value="{{order.id}}" name="order_completed"
+                                            class="btn btn-sm btn-success me-3">
+                                            <i class="fa-solid fa-check"></i>
+                                        </button>
+                                    </form> {% endcomment %} {% comment %}
+                                    <form method="POST">
+                                        <button type="submit" name="delete_order" value="{{order.id}}"
+                                            class="btn btn-sm btn-danger me-3">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button> Order Details
+                                    </form> {% endcomment %}
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        {% if order.status == 'Shipped' %}
+                                        <a href="{% url 'set_order_complete' order.id %}" class='me-3'>
+                                            <div class="btn btn-sm btn-success">
+                                                <i class="fa-solid fa-check"></i>
+                                            </div>
+                                        </a>
+                                        {% endif %}
+                                        <a href="{% url 'delete_order' order.id %}" class='me-3'>
+                                            <div class="btn btn-sm btn-danger">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </div>
+                                        </a>
+                                    </form>
+                                    <div type="button" class="btn btn-secondary btn-sm" data-mdb-toggle="modal"
+                                        data-mdb-target="#exampleModal{{forloop.counter}}">
+                                        See Details
+                                    </div>
+                                </td>
+
+
+
+                            </tr>
+
+                            {% endfor %}
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Section: Order Summary-->
+
+
+    <!-- Section: Main chart -->
+    <section class="mb-4 pt-5">
+        <div class="card inflow">
+            <div class="card-header py-3">
+                <h5 class="mb-0 text-center"><strong>Order Summary</strong></h5>
+            </div>
+            <div class="card-body">
+                <canvas class="my-4 w-100" id="myChart" height="380"></canvas>
+            </div>
+        </div>
+    </section>
+    <!-- Section: Main chart -->
+
+
+    {% for order in orders%}
+    <!-- Modals Section -->
+    <div class="modals">
+        <!-- Modal -->
+        <div class="modal fade inflow" id="exampleModal{{forloop.counter}}" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width:75%;">
+                <div class="modal-content inflow">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Order Details</h5>
+                        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <strong>Customer Name:</strong> {{order.customer_name}}
+                        <br>
+                        <strong>Customer Phone:</strong> {{order.customer_phone}}
+                        <br>
+                        <strong>Delivery Address:</strong> {{order.delivery_address}}
+
+                        <hr>
+                        <div class="h2">Order Status</div>
+                        <form method="POST" class="d-flex">
+                            {% csrf_token %}
+
+                            <input type="hidden" value="{{order.id}}" name="order_id">
+
+                            <select class="form-select form-control form-control-lg" name="status">
+
+                                {% if order.status == 'Unapproved' %}
+                                <option value="Unapproved" selected>Unapproved</option>
+                                {%else%}
+                                <option value="Unapproved">Unapproved</option>
+                                {% endif %}
+
+                                {% if order.status == 'Approved' %}
+                                <option value="Approved" selected>Approved</option>
+                                {%else%}
+                                <option value="Approved">Approved</option>
+                                {% endif %}
+
+                                {% if order.status == 'Shipped' %}
+                                <option value="Shipped" selected>Shipped</option>
+                                {%else%}
+                                <option value="Shipped">Shipped</option>
+                                {% endif %}
+
+                                {% if order.status == 'Completed' %}
+                                <option value="Completed" selected>Completed</option>
+                                {%else%}
+                                <option value="Completed">Completed</option>
+                                {% endif %}
+
+                                
+                              </select>
+
+                            <input class="btn btn-sm btn-primary ms-4" id="status_update" type="submit" value="Update Status">
+                        </form>
+                        <hr>
+                        <div class="order-summary">
+                            <h3>Order Summary</h3>
+                            <table class="table table-bordered border-dark text-center" style="width:100%;">
+                                <thead>
+
+                                    <th class="small  py-0">Serial .no</td>
+                                    <th class="small  py-0">Product Id</td>
+                                    <th class="small  py-0">Product Image</td>
+                                    <th class="small py-0">Product Name</td>
+                                    <th class="small  py-0">Product Price</td>
+                                    <th class="small py-0">Product Quantity</td>
+                                        {% comment %}
+                                    <th class="small py-0">Total</td> {% endcomment %}
+                                </thead>
+                                <tbody>
+                                    {% for product in order.order_item.all %}
+                                    <tr>
+                                        <td class="small px-2 py-0">{{ forloop.counter }}</td>
+                                        <td class="small px-2 py-0">{{ product.product.id }}</td>
+                                        <td class="small ">
+                                            {% for img in product.product.product_photos %}
+                                            {% comment %} {{ product.product.product_photos }} {% endcomment %}
+                                            {% comment %} <img src={{img}} class="img-thumbnail w-25 h-25" alt={{img}}
+                                                srcset=""> {% endcomment %}
+                                            <img src={{img}} class="rounded mx-1" alt={{img}} width="50" height="50">
+
+                                            {% endfor %}
+                                        </td>
+                                        <td class="small px-2 py-0">{{product.product.product_name}}</td>
+                                        <td class="small px-2 py-0">{{product.product.product_price}}</td>
+                                        <td class="small px-2 py-0">{{product.quantity}}</td>
+                                        {% comment %}
+                                        <td class="small px-2 py-0">{{ order.total }}</td> {% endcomment %}
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            Total: Rs. {{order.total}}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+
+</div>
+
+
+
+{%endblock%} {%block js%}
+<script>
+    $(function () {
+
+        $(".list-group-item").each(function () {
+            $(".active").removeClass(".active");
+            if ($(this).text().toLowerCase().includes("shop")) {
+                $(this).addClass("active");
+            }
+        });
+
+        $(document).ready(function () {
+            $('#orders').DataTable();
+        });
+
+
+
+        // Graph
+        var ctx = document.getElementById("myChart");
+
+        var myChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: [
+                    "Sunday",
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Saturday",
+                ],
+                datasets: [{
+                    label: "Orders",
+                    data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+                    lineTension: 0.3,
+                    backgroundColor: "transparent",
+                    borderColor: "#007bff",
+                    borderWidth: 4,
+                    pointBackgroundColor: "#007bff",
+                },],
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false,
+                        },
+                    },],
+                },
+                legend: {
+                    display: false,
+                },
+            },
+        });
+    })
+</script>
+
+{%endblock%}

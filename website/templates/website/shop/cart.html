@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block main %}
+
+<link rel="stylesheet" href="{% static 'css/cart_style.css' %}">
+
+<div class="container px-3 my-5 clearfix">
+    <!-- Shopping cart table -->
+    <div class="card">
+        <div class="card-header">
+            <h2>Shopping Cart</h2>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered m-0">
+                <thead>
+                  <tr>
+                    <!-- Set columns width -->
+                    <th class="text-center py-3 px-4" style="min-width: 400px;">Product Name &amp; Details</th>
+                    <th class="text-right py-3 px-4" style="width: 100px;">Price</th>
+                    <th class="text-center py-3 px-4" style="width: 120px;">Quantity</th>
+                    <th class="text-right py-3 px-4" style="width: 100px;">Total</th>
+                    <th class="text-center align-middle py-3 px-0" style="width: 40px;"><a href="#" class="shop-tooltip float-none text-light" title="" data-original-title="Clear cart"><i class="ino ion-md-trash"></i></a></th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                
+              </tbody>
+              </table>
+            </div>
+            <!-- / Shopping cart table -->
+        
+            <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
+              <div class="mt-4">
+                {% comment %} <label class="text-muted font-weight-normal">Promocode</label>
+                <input type="text" placeholder="ABC" class="form-control"> {% endcomment %}
+              </div>
+              <div class="d-flex">
+                <div class="text-right mt-4 me-5">
+                  {% comment %} <label class="text-muted font-weight-normal m-0">Discount</label>
+                  <div class="text-large "><strong>Rs. 0</strong></div> {% endcomment %}
+                </div>
+                <div class="text-right mt-4">
+                  <label class="text-muted font-weight-normal m-0">Total price</label>
+                  <div class="text-large" id="total_price"></div>
+                </div>
+              </div>
+            </div>
+        
+            <div class="float-end">
+              <a href = '/shop' type="button" class="btn btn-lg btn-default md-btn-flat mt-2 mr-3">Back to shopping</a>
+              <a href = '/checkoutdetail' type="button" class="btn btn-lg btn-primary mt-2">Checkout</a>
+            </div>
+        
+          </div>
+      </div>
+  </div>
+  
+  <script>
+   
+
+
+
+    // Retrieve the cart data from localStorage
+var cartData = JSON.parse(localStorage.getItem('cart'));
+
+// Check if the cart is empty
+  if (cartData == null || cartData.length == 0) {
+    
+    // Hide the "Checkout" button
+
+    document.querySelector('.btn.btn-lg.btn-primary.mt-2').style.display = 'none';
+    const emptyMessage = $("<p>").addClass("text-end m-5 ").text("Your cart is empty.");
+      $("table").append(emptyMessage);
+    tbody.appendChild(emptyMessage);
+  }
+
+
+    // Initialize variables for total price and item quantity
+    var totalQuantity = 0;
+    var totalPrice = 0;
+  
+    // Create an object to store the unique items in the cart
+    var uniqueItems = {};
+  
+    // Loop through the cart data and add each unique item to the uniqueItems object
+    $.each(cartData, function(index, item) {
+      var itemId = item['id'];
+      if (uniqueItems[itemId] === undefined) {
+        uniqueItems[itemId] = {
+          'product_name': item['product_name'],
+          'product_price': item['product_price'],
+          'product_photos': item['product_photos'],
+          'quantity': 1
+        };
+      } else {
+        uniqueItems[itemId]['quantity'] += 1;
+      }
+    });
+  
+    // Loop through the uniqueItems object and generate the table rows
+    $.each(uniqueItems, function(itemId, item) {
+      
+      // Calculate the total price for the item
+      var itemTotal = item['product_price'] * item['quantity'];
+  
+      // Update the total quantity and price
+      totalQuantity += item['quantity'];
+      totalPrice += itemTotal;
+  
+      // Create a new row for the item
+      var row = $('<tr>');
+  
+      // Create the columns for the row
+      var productColumn = $('<td>').addClass('text-center py-3 px-4').css('min-width', '400px');
+      var productName = $('<h5>').addClass('mb-0').text(item['product_name']);
+      var productDetails = $('<p>').addClass('mb-0').text('');
+      
+      console.log(item['product_photos'])
+      var productImg = $('<img>').attr('src', item['product_photos']).addClass('img-fluid').css('width', '100px');
+      productColumn.append(productName).append(productDetails).append(productImg);
+  
+      var priceColumn = $('<td>').addClass('text-right py-3 px-4').css('width', '100px').text(item['product_price']);
+  
+      var quantityColumn = $('<td>').addClass('text-center py-3 px-4').css('width', '120px').text(item['quantity']);
+  
+      var totalColumn = $('<td>').addClass('text-right py-3 px-4').css('width', '100px').text(itemTotal);
+  
+      var removeColumn = $('<td>').addClass('text-center align-middle py-3 px-0').css('width', '40px');
+      var removeLink = $('<a>').addClass('shop-tooltip float-none text-light').attr('href', '#').attr('title', '').attr('data-original-title', 'Clear cart');
+      var removeIcon = $('<i>').addClass('fas fa-trash')
+        
+      removeLink.append(removeIcon);
+      removeColumn.append(removeLink);
+  
+      // Append the columns to the row
+      row.append(productColumn).append(priceColumn).append(quantityColumn).append(totalColumn).append(removeColumn);
+  
+      // Append the row to the table body
+      $('tbody').append(row);
+    });
+    var formattedPrice = "Rs. " + totalPrice.toFixed(2); 
+    // Update the total price element with the calculated total price
+    document.getElementById('total_price').innerHTML ="<strong>" + formattedPrice + "</strong>";
+    // $('strong:contains("{{total_price}}")').text('$' + totalPrice); 
+    const toastTrigger = document.getElementById('liveToastBtn')
+    const toastLiveExample = document.getElementById('liveToast')
+    
+    if (toastTrigger) {
+      const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+      toastTrigger.addEventListener('click', () => {
+        toastBootstrap.show()
+      })
+    }
+  </script>
+  
+
+
+{% endblock %}

@@ -1,0 +1,177 @@
+{%extends 'superuser-base.html'%} {%block title%} Consultation Requests | The Bookwishes Club {%endblock%}
+<!--  -->
+{%block main%}
+<!--  -->
+
+
+
+<style>
+    td {
+        padding: 1rem !important;
+    }
+</style>
+
+<!--Section: Notifications Summary-->
+<section class="mb-4 mt-5">
+    <div class="card inflow">
+        <div class="card-header text-center py-3">
+            <h5 class="mb-0 text-center">
+                <strong>Consultation Requests</strong>
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="orders" class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th scope="col">Full Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Company</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Action</th>
+
+
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        {% for consult in consulation_requests %}
+
+                        <td>{{consult.name}}</td>
+                        <td>{{consult.email}}</td>
+                        <td>{{consult.phone}}</td>
+                        <td>{{consult.type}}</td>
+                        <td>{{consult.company}}</td>
+                        <td>{{consult.address}}</td>
+                        <td>
+
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-sm btn-primary" data-mdb-toggle="modal"
+                                data-mdb-target="#exampleModalMessage{{forloop.counter}}">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-sm btn-danger" data-mdb-toggle="modal"
+                                data-mdb-target="#exampleModal{{forloop.counter}}">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                            
+
+
+                        </td>
+                        </tr>
+                        {%endfor%}
+
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% for consult in consulation_requests %}
+<!-- Modal -->
+<div class="modal fade" id="exampleModal{{forloop.counter}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete "{{consult.name}}"</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Do you want to delete consult "{{consult.name}}"?</p>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="consult_id" value="{{consult.id}}">
+                    <input type="submit" name="delete_consult" value="Delete" class="btn btn-sm btn-danger">
+                    <input type="button" class="btn btn-sm btn-secondary" data-mdb-dismiss="modal" value="Close">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalMessage{{forloop.counter}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Message From {{consult.name}}</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <span class="fw-bold">Name:</span> {{consult.name}}
+                </p>
+
+                <p>
+                    <span class="fw-bold">Email:</span> {{consult.email}}
+                </p>
+
+                <p>
+                    <span class="fw-bold">Phone:</span> {{consult.phone}}
+                </p>
+
+                <p>
+                    <span class="fw-bold">Address:</span> {{consult.address}}
+                </p>
+
+                <p>
+                    <span class="fw-bold">Consultation Type:</span> {{consult.type}}
+                </p>
+                {% if consult.company %}
+                <p>
+                    <span class="fw-bold">Company:</span> {{consult.company}}
+                </p>
+                {% endif %}
+
+                <p>
+                    <span class="fw-bold">Message:</span> <br> {{consult.message}}
+                </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{%endfor%}
+
+<!--  -->
+{% endblock %}
+<!--  -->
+
+
+
+
+
+
+
+
+{%block js%}
+<script>
+    $('#toast').delay(3000).fadeOut('fast');
+    $(function () {
+
+        $(".list-group-item").each(function () {
+            $(".active").removeClass(".active");
+            if ($(this).text().toLowerCase().includes("admin consultation request")) {
+                $(this).addClass("active");
+            }
+        });
+
+        $(document).ready(function () {
+            $('#orders').DataTable();
+        });
+    })
+</script>
+{%endblock%}

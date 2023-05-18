@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block title %} Introductory Session Feedback Form | The Bookwishes Club {% endblock %}
+
+{% block main %}
+
+<div class="container py-5">
+
+
+  <h1>{{event_data.event_name}}</h1>
+  
+
+  
+
+
+  <form method="POST" class="row g-3">
+    {% csrf_token %}
+    <div class="col-md-6">
+      <label for="email" class="form-label">Enter you email to verify the attendance for this event</label>
+      <input type="text" name="email" id="email" class="form-control" required>
+    </div>
+    
+    <div class="col-lg-12">
+      {% if error %}
+      <div class="alert alert-danger small">
+        {{error}}
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="col-lg-12">
+      {% if success %}
+      <div class="alert alert-success small">
+        {{success}}
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">I am attending this event</button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}
+
+  

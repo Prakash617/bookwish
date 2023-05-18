@@ -1,0 +1,89 @@
+{% extends 'base.html' %} {% block main %}
+<div class="container main-content pb-5">
+    <div class="container">
+    
+        <p id="demo"></p>
+        <div>
+            <div class="shopping-items">
+                <div class="position-sticky  d-flex justify-content-between w-100 my-3 py-3" style="top:0;z-index:999;background:#fff">
+                    <h1 class="title fw-bold mb-3">
+                        <i class="fa-solid fa-shop"></i> Merchandise Shop
+                    </h1>
+            
+                    <div>
+            
+    
+                        <a href="/shop/cart" type="button" class="btn btn-primary position-relative">
+                            My Cart 
+                            <span id = 'cart_len' class="position-absolute  top-0 start-100 translate-middle badge rounded-pill bg-danger fs-6">
+                            0
+                            </span>
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        {% for product in shop_products %}
+                        <div class="col-lg-4 mb-5">
+                            <div class="card border" id="{{product.id}}">
+                                <img src="{{product.product_photos.0}}" alt="" style="width: 100%; height:186px;object-fit: contain;">
+                                <div class="card-body text-center">
+                                    <div class="title fw-bold">
+                                        {{product.product_name}}
+                                    </div>
+                                    <div class="price fs-3 my-3">
+                                        Rs. {{product.product_price}}
+                                    </div>
+                                    <div class="cart-button">
+                                        <a id="add_to_cart_{{product.id}}" onclick="addToCart('{{product.id|safe}}')" class="btn btn-small btn-native">
+                                            Add to Cart
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+</div>
+
+<script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let cart_len = cart.length ;
+        $('#cart_len').text(cart_len);
+    function addToCart(product_id) {
+        console.log('hello');
+        var p_id = Number(product_id);
+        var shopProducts = JSON.parse('{{ shop_products_json|escapejs }}');
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let cart_len = cart.length + 1;
+        console.log(cart_len);
+        $('#cart_len').text(cart_len);
+        let item_obj = {}
+
+        console.log(item_obj)
+        for (var i = 0; i < shopProducts.length; i++) {
+            var product = shopProducts[i];
+
+            if (product.id == p_id) {
+                item_obj["id"] = product.id
+
+                item_obj["product_photos"] = product.product_photos[0];
+
+                item_obj["product_name"] = product.product_name
+                item_obj["product_price"] = product.product_price
+                cart.push(item_obj);
+                localStorage.setItem("cart", JSON.stringify(cart));
+
+            }
+        }
+    }
+</script>
+
+
+{% endblock %}

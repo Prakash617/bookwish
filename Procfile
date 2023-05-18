@@ -1,0 +1,1 @@
+web: gunicorn bookwishes.wsgi --log-file -

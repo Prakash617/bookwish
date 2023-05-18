@@ -1,0 +1,133 @@
+{%extends 'superuser-base.html'%} {%block title%} Create Recommended Books | The Bookwishes Club {%endblock%} {%block main%}
+
+
+<div class="container inflow p-3">
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %} {{form}}
+             
+
+        {% comment %} <input type="file" id="postImage" name="image"> {% endcomment %}
+        <br>
+        <br>
+        <button type="submit" name="Submit" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">Create</button>
+    </form>
+
+</div>
+
+
+<style>
+    td {
+        padding: 1rem !important;
+    }
+</style>
+
+<!--Section: Notifications Summary-->
+<section class="mb-4 mt-5">
+    <div class="card inflow">
+        <div class="card-header text-center py-3">
+            <h5 class="mb-0 text-center">
+                <strong>Recommended Books</strong>
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="orders" class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th scope="col">Book Image</th>
+                            <th scope="col">Book Name</th>
+                            <th scope="col">Book Description</th>
+                            <th scope="col">Book Link</th>
+                            <th scope="col">Action</th>
+
+                            
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        {% for book in books %}
+                        <tr>
+                            <td><img class="w-100" style="height: 2rem; object-fit: contain;"
+                                src="/media/{{book.image}}" alt=""></td>
+                            <td>{{book.name}}</td>
+                            <td>{{book.description}}</td>
+                            <td>{{book.link}}</td>
+                            <td>
+                               
+                                <button type="button" class="btn btn-sm btn-danger" data-mdb-toggle="modal"
+                                    data-mdb-target="#exampleModal{{forloop.counter}}">
+                                    Delete
+                                </button>    
+                            </td>
+                        </tr>
+                        {%endfor%}
+                    
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% for book in books %}
+<!-- Modal -->
+<div class="modal fade" id="exampleModal{{forloop.counter}}" tabindex="-1"
+aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Delete "{{book.name}}"</h5>
+            <button type="button" class="btn-close" data-mdb-dismiss="modal"
+                aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Do you want to delete book "{{book.name}}"?</p>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="book_id" value="{{book.id}}">
+                <input type="submit" name="delete_book" value="Delete"
+                    class="btn btn-sm btn-danger">
+                    <button type="button" class="btn btn-sm btn-secondary"
+                data-mdb-dismiss="modal">Close</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+{%endfor%}
+
+
+
+{% for message in msg %}
+<div class="alert  {{ message.tags }} position-fixed  end-0 p-4 px-5 me-3 " style ="z-index:{{ forloop.counter }};top:5rem; border-radius:4px; " id = "toast" role="alert">
+  <p>  {{ message | safe }} </p>
+</div>
+
+{% endfor %}
+
+
+
+{%endblock%}
+
+
+
+{%block js%}
+<script>
+    $('#toast').delay(3000).fadeOut('fast');
+    $(function () {
+
+        $(".list-group-item").each(function () {
+            $(".active").removeClass(".active");
+            if ($(this).text().toLowerCase().includes("book")) {
+                $(this).addClass("active");
+            }
+        });
+
+        $(document).ready(function () {
+            $('#orders').DataTable();
+        });
+    })
+</script>
+{%endblock%}
+
+

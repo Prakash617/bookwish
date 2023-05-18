@@ -1,0 +1,165 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Order Confirmation</title>
+        
+        <!-- Start Common CSS -->
+        <style type="text/css">
+            #outlook a {padding:0;}
+            body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0; font-family: Helvetica, arial, sans-serif;}
+            .ExternalClass {width:100%;}
+            .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;}
+            .backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;}
+            .main-temp table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; font-family: Helvetica, arial, sans-serif;}
+            .main-temp table td {border-collapse: collapse;}
+        </style>
+        <!-- End Common CSS -->
+    </head>
+    <body>
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" class="backgroundTable main-temp" style="background-color: #d44a26;">
+            <tbody>
+                <tr>
+                    <td>
+                        <table width="600" align="center" cellpadding="15" cellspacing="0" border="0" class="devicewidth" style="background-color: #ffffff;">
+                            <tbody>
+                                <!-- Start header Section -->
+                                <tr>
+                                    <td style="padding-top: 30px;">
+                                        <table width="560" align="center" cellpadding="0" cellspacing="0" border="0" class="devicewidthinner" style="border-bottom: 1px solid #eeeeee; text-align: center;">
+                                            <tbody style="padding-bottom: 10px;">
+                                                <tr>
+                                                    <td style="padding-bottom: 10px;">
+                                                        <a href="http://thebookwishesclub.com/"><img style="height: 9rem;" src="https://www.thebookwishesclub.com/media/medias/bookwishes_logo_aRkDEdg.jpg" alt="The Bookwishes Club" /></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 14px; line-height: 18px; color: #666666;">
+                                                        Kumaripati
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 14px; line-height: 18px; color: #666666;">
+                                                        Lalitpur, Nepal
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 14px; line-height: 18px; color: #666666; padding-bottom: 10px;">
+                                                        Phone: +977-981906699 | Email: thebookwishesclub@gmail.com                                                   </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!-- End header Section -->
+                                
+                                <!-- Start address Section -->
+                                <tr>
+                                    <td style="padding-top: 10px;">
+                                        <table width="560" align="center" cellpadding="0" cellspacing="0" border="0" class="devicewidthinner" style="border-bottom: 1px solid #bbbbbb;">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width: 55%; font-size: 16px; font-weight: bold; color: #666666; padding-bottom: 5px;">
+                                                        Delivery Adderss
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 55%; font-size: 14px; line-height: 18px; color: #666666; padding-bottom: 10px;">
+                                                       {{address}}
+                                                    </td>
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!-- End address Section -->
+                                
+                                <!-- Start product Section -->
+                                {% for order in order_items %}
+                                <tr>
+                                    <td style="padding-top: 0;">
+                                        <table width="560" align="center" cellpadding="0" cellspacing="0" border="0" class="devicewidthinner" style="border-bottom: 1px solid #eeeeee;">
+                                            <tbody>
+                                                <tr>
+                                                    <td rowspan="4" style="padding-right: 10px; padding-bottom: 10px;">
+                                                        <img style="height: 80px; object-fit: contain;" src="https://thebookwishesclub.com/{{order.product_photos}}" alt="Product Image" />
+                                                    </td>
+                                                    <td colspan="2" style="font-size: 14px; font-weight: bold; color: #666666; padding-bottom: 5px;">
+                                                        {{order.product_name}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 14px; line-height: 18px; color: #757575; width: 440px;">
+                                                        Quantity: {{order.quantity}}
+                                                    </td>
+                                                    <td style="width: 130px;"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 14px; line-height: 18px; color: #757575;">
+                                                        
+                                                    </td>
+                                                    <td style="font-size: 14px; line-height: 18px; color: #757575; text-align: right;">
+                                                        Rs. {{order.product_price}} (Per Unit)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 14px; line-height: 18px; color: #757575; padding-bottom: 10px;">
+                                                        Total
+                                                    </td>
+                                                    <td style="font-size: 14px; line-height: 18px; color: #757575; text-align: right; padding-bottom: 10px;">
+                                                        <b style="color: #666666;">Rs. {{order.total}}</b>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                <!-- End product Section -->
+                                
+                                <!-- Start calculation Section -->
+                                <tr>
+                                    <td style="padding-top: 0;">
+                                        <table width="560" align="center" cellpadding="0" cellspacing="0" border="0" class="devicewidthinner" style="border-bottom: 1px solid #bbbbbb; margin-top: -5px;">
+                                            <tbody>
+                                                <tr>
+                                                    <td rowspan="5" style="width: 55%;"></td>
+                                                    <td style="font-size: 14px; line-height: 18px; color: #666666;">
+                                                        Sub-Total:
+                                                    </td>
+                                                    <td style="font-size: 14px; line-height: 18px; color: #666666; width: 130px; text-align: right;">
+                                                        {{summary.grand_total}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 14px; line-height: 18px; color: #666666; padding-bottom: 10px; border-bottom: 1px solid #eeeeee;">
+                                                        Shipping Fee:
+                                                    </td>
+                                                    <td style="font-size: 14px; line-height: 18px; color: #666666; padding-bottom: 10px; border-bottom: 1px solid #eeeeee; text-align: right;">
+                                                        {{summary.deliver}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-size: 14px; font-weight: bold; line-height: 18px; color: #666666; padding: 10px 0;">
+                                                        Order Total
+                                                    </td>
+                                                    <td style="font-size: 14px; font-weight: bold; line-height: 18px; color: #666666; padding: 10px 0; text-align: right;">
+                                                        {{summary.grand_total}}
+                                                        <br>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!-- End calculation Section -->
+                                
+                               
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

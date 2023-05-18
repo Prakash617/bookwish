@@ -1,0 +1,157 @@
+{% extends 'superuser-base.html' %}
+<!--  -->
+{% load custom_filters %}
+<!--  -->
+{% block title %} Upload a Media | The Book Wishes Club {%endblock%}
+<!--  -->
+{% block main%}
+<!--  -->
+
+
+
+<div class="container p-5">
+    <div class="post inflow p-5">
+
+        <form method="post" action="" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <div class="form-outline w-100 mb-3">
+                <input type='file' class="form-control" id="textAreaExample" rows="4" name="post_images[]" multiple
+                    style="background: #fff;">
+            </div>
+
+            <div class="mt-3 d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary btn-sm">Post</button>
+
+            </div>
+        </form>
+    </div>
+
+    <section class="mb-4 mt-5">
+        <div class="card inflow">
+            <div class="card-header text-center py-3">
+                <h5 class="mb-0 text-center">
+                    <strong>Media</strong>
+                </h5>
+            </div>
+
+            <div class="container">
+                <div class="row p-4">
+                    {% for media in medias %}
+                    <div class="col-lg-3 h-100">
+                        <div class="border p-4">
+                            {% if media.media.url|check_mp4 %}
+                            <video controls class="w-100" src="{{media.media.url}}"></video>
+                            {% else %}
+                            <img src="{{ media.media.url }}" class="img-rounded w-100"
+                                style="height: 6rem; object-fit:contain;" alt="{{ media.alt }}">
+                            {% endif %}
+
+                            {% if media.name is not None%}
+                            {{media.name}}
+                            {%endif %}
+
+                            <div class="mt-4">
+
+                                <a class="text-danger" type="button" class="btn btn-primary" data-mdb-toggle="modal"
+                                    data-mdb-target="#delete_common_question_{{ media.id}}">
+                                    <div class="btn btn-sm btn-danger">
+                                        Delete</div>
+                                </a>
+
+                                <button class="btn btn-sm btn-primary ms-2" onclick="copyUrl(this)"
+                                    id="media_{{forloop.counter}}">
+                                    <i class="fa-solid fa-copy"></i>
+                                </button>
+
+                                <div class="d-none">
+                                    <input type="text" id="media_url_{{forloop.counter}}"
+                                        value="https://thebookwishesclub.com{{media.media.url}}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <script>
+                    function copyUrl(el) {
+                        console.log(el)
+                        current_id = el.id;
+
+                        current_image_id = current_id.replace("media_", "media_url_")
+
+                        console.log(current_image_id)
+
+                        var copyText = document.getElementById(current_image_id)
+                        copyText.select();
+                        copyText.setSelectionRange(0, 99999);
+
+                        navigator.clipboard.writeText(copyText.value)
+
+                        el.innerHTML = `<i class="fa-solid fa-check"></i>`;
+                    }
+                </script>
+            </div>
+        </div>
+
+    </section>
+</div>
+<!-- Delete Confirm Modal -->
+<!-- Modal -->
+
+{% for media in medias %}
+
+<div class="modal fade" id="delete_common_question_{{ media.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body ">
+                <p>Are you sure you want to delete this media ?</p>
+                <div>
+                    {% if media.media %}
+                    <img src="{{ media.media.url}}" class="img-rounded" alt={{ media.name }} width="100"> {% endif %}
+                    <strong>"
+                        {{ media.name|slice:"0:30" }}...
+                        "</strong>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+
+                <a href="{% url 'delete_media' media.id %}">
+                    <div class="btn btn-sm btn-danger">
+                        Delete</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+
+{%endblock%}
+
+
+{%block js%}
+<script>
+    $(function () {
+
+        $(".list-group-item").each(function () {
+            $(".active").removeClass(".active");
+            if ($(this).text().toLowerCase().includes("media")) {
+                $(this).addClass("active");
+            }
+        });
+
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    })
+</script>
+{%endblock%}

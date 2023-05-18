@@ -1,0 +1,160 @@
+/* =================== Default CSS Configutations Start =================== */
+
+:root {
+    --mdb-primary: #d44a26;
+    --mdb-secondary: #fbc02d;
+
+}
+
+html {
+    font-size: 15px;
+}
+
+#main-navbar {
+    box-shadow: none;
+}
+
+.list-group-item {
+    font-size: 0.8rem;
+}
+
+.text-primary {
+    color: var(--mdb-primary) !important;
+}
+
+.list-group-item.active {
+    border: 0;
+    background: rgba(212, 74, 38, 0.8);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 10px;
+}
+
+td {
+    padding: 2rem 0 !important;
+    vertical-align: middle;
+}
+
+td:nth-child(6) {
+    text-align: center;
+}
+
+.sorting_1 {
+    vertical-align: middle;
+    text-align: center;
+}
+
+/* ===================  End of Default CSS Configutations =================== */
+
+
+
+/* =================== Admin Dashboard MD Bootstrap CSS Start =================== */
+body {
+    background-color: #fbfbfb;
+    font-family: 'Montserrat', sans-serif;
+    background-image: url('https://res.cloudinary.com/mediaholic-nepal/image/upload/v1660750657/Bookwishes/admin/Mintmade_Fashion_mddllb.png');
+    background-position: top right;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-attachment: fixed;
+}
+
+@media (min-width: 991.98px) {
+    main {
+        padding-left: 300px;
+    }
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    padding: 20px 0 0;
+    /* Height of navbar */
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+    width: 300px;
+    z-index: 600;
+    overflow-y: scroll;
+
+
+
+    background: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+@media (max-width: 991.98px) {
+    .sidebar {
+        width: 100%;
+    }
+}
+
+.sidebar .active {
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    color: white;
+}
+
+
+.sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: 0.5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    /* Scrollable contents if viewport is shorter than content. */
+}
+
+/* =================== End of Admin Dashboard MD Bootstrap CSS =================== */
+
+
+
+
+.users .card {
+    background: rgba(252, 212, 119, 0.45);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 10px;
+}
+
+.tools .card,
+.progress,
+.navbar-nav,
+.inflow {
+    background: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 10px;
+}
+
+.progress {
+    height: 1rem;
+    border-radius: 3rem;
+}
+
+.users .card-body> :first-child {
+    background: rgba(255, 255, 255, 0.80);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 10px;
+}
+
+.bubbles {
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 50%;
+}

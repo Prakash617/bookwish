@@ -1,0 +1,250 @@
+{% extends 'superuser-base.html' %}
+
+{% block title %} Website Traffic | The Book Wishes Club {%endblock%}
+
+{% block main %}
+
+
+    
+        <div class="container p-5">
+
+            <!-- Other Datas -->
+            <div class="container-fluid rounded-9 tools pt-3 mt-5 pb-3">
+                <hr>
+
+                <div class="h3 fw-bold text-primary">Today's Stats</div>
+
+
+                <div class="row rounded-9 mb-5 mt-4">
+
+                    <div class="col-lg-3">
+                        <div class="card text-center">
+                            <div class="bubbles bg-success" style="bottom: -12px; right: 42%;"></div>
+                            <div class="card-body">
+                                <div class="fw-bold text-success">
+                                    App Installs
+                                </div>
+                                <div class="fs-1 fw-bold text-success">
+                                    30
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="card text-center">
+                            <div class="bubbles bg-warning" style="bottom: -12px; right: 42%;"></div>
+                            <div class="card-body">
+                                <div class="fw-bold text-warning">
+                                    Active Users
+                                </div>
+                                <div class="fs-1 fw-bold text-warning">
+                                    {{total_active_users}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                </div>
+
+            </div>
+
+            <!--Section: Sales Performance KPIs-->
+
+            <hr>
+            <div class="h3 fw-bold text-primary mb-3">Monthly Analysis</div>
+            <section class="mb-4">
+                <div class="card inflow">
+                    <div class="card-header text-center py-3">
+                        <h5 class="mb-0 text-center">
+                            <strong>Traffic Data</strong>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="table_id" class="table table-hover text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Jan</th>
+                                        <th scope="col">Feb</th>
+                                        <th scope="col">Mar</th>
+                                        <th scope="col">Apr</th>
+                                        <th scope="col">May</th>
+                                        <th scope="col">Jun</th>
+                                        <th scope="col">Jul</th>
+                                        <th scope="col">Aug</th>
+                                        <th scope="col">Sep</th>
+                                        <th scope="col">Oct</th>
+                                        <th scope="col">Nov</th>
+                                        <th scope="col">Dec</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Active Users</th>
+                                        <td>
+                                            <span class="text-success">
+                                                <i class="fas fa-caret-up me-1"></i><span>50</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="text-danger">
+                                                <i class="fas fa-caret-down me-1"></i><span>48</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="text-success">
+                                                <i class="fas fa-caret-up me-1"></i><span>350</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="text-success">
+                                                <i class="fas fa-caret-up me-1"></i><span>359</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="text-danger">
+                                                <i class="fas fa-caret-down me-1"></i><span>48</span>
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span class="text-danger">
+                                                <i class="fas fa-caret-down me-1"></i><span>40</span>
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span class="text-success">
+                                                <i class="fas fa-caret-up me-1"></i><span>64</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="text-success">
+                                                <i class="fas fa-caret-up me-1"></i><span>359</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="text-success">
+                                                <i class="fas fa-caret-up me-1"></i><span>500</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="text-success">
+                                                <i class="fas fa-caret-up me-1"></i><span>549</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="text-danger">
+                                                <i class="fas fa-caret-down me-1"></i><span>438</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="text-danger">
+                                                <i class="fas fa-caret-down me-1"></i><span>428</span>
+                                            </span>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">App Installs</th>
+                                        <td>
+                                            <span class="text-success">
+                                                <i class="fas fa-caret-up me-1"></i><span>50</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="text-danger">
+                                                <i class="fas fa-caret-down me-1"></i><span>48</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="text-success">
+                                                <i class="fas fa-caret-up me-1"></i><span>350</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="text-success">
+                                                <i class="fas fa-caret-up me-1"></i><span>359</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="text-danger">
+                                                <i class="fas fa-caret-down me-1"></i><span>48</span>
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span class="text-danger">
+                                                <i class="fas fa-caret-down me-1"></i><span>40</span>
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span class="text-success">
+                                                <i class="fas fa-caret-up me-1"></i><span>64</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="text-success">
+                                                <i class="fas fa-caret-up me-1"></i><span>359</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="text-success">
+                                                <i class="fas fa-caret-up me-1"></i><span>500</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="text-success">
+                                                <i class="fas fa-caret-up me-1"></i><span>549</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="text-danger">
+                                                <i class="fas fa-caret-down me-1"></i><span>438</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="text-danger">
+                                                <i class="fas fa-caret-down me-1"></i><span>428</span>
+                                            </span>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--Section: Sales Performance KPIs-->
+        </div>
+
+
+{%endblock%}
+
+
+
+{%block js%}
+<script>
+    $(function () {
+        $(".list-group-item").each(function () {
+            $(".active").removeClass(".active");
+            if ($(this).text().toLowerCase().includes("traffic")) {
+                $(this).addClass("active");
+            }
+        });
+
+        $(document).ready(function () {
+            $("#table_id").DataTable();
+        });
+    });
+</script>
+{%endblock%}

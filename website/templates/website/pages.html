@@ -1,0 +1,107 @@
+{%extends 'superuser-base.html'%} {%block title%} Page| The Bookwishes Club {%endblock%} {%block main%}
+
+
+<style>
+    td {
+        padding: 1rem !important;
+    }
+</style>
+
+<!--Section: Notifications Summary-->
+<section class="mb-4 mt-5">
+    <div class="card inflow">
+        <div class="card-header text-center py-3">
+            <h5 class="mb-0 text-center">
+                <strong>Pages</strong>
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="orders" class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Action</th>
+
+
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        
+                        <tr>
+                           
+                            <td>About Us</td>
+                            <td><a href="/superuser/edit-aboutus" <span>Edit</span> </a></td>
+                            
+                        </tr>
+                        <tr>
+                           
+                            <td>Privacy Policy</td>
+                            <td><a href="/superuser/edit-privacy-policy" <span>Edit</span> </a></td>
+                            
+                        </tr>
+                        <tr>
+                           
+                            <td>Terms of Services</td>
+                            <td><a href="/superuser/edit-terms-and-services" <span>Edit</span> </a></td>
+                            
+                        </tr>
+                        <tr>
+                           
+                            <td>Link and Resources</td>
+                            <td><a href="/superuser/edit-link-and-resources" <span>Edit</span> </a></td>
+                            
+                        </tr>
+                        <tr>
+                           
+                            <td>Consultation Request</td>
+                            <td><a href="/superuser/edit-consultation-request" <span>Edit</span> </a></td>
+                            
+                        </tr>
+                        <tr>
+                           
+                            <td>Services Pages</td>
+                            <td><a href="/superuser/edit-service-pages" <span>Edit</span> </a></td>
+                            
+                        </tr>
+                        
+                        
+
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+{%endblock%}
+
+
+
+{%block js%}
+<script>
+    $('#toast').delay(3000).fadeOut('fast');
+    $(function () {
+
+        $(".list-group-item").each(function () {
+            $(".active").removeClass(".active");
+            if ($(this).text().toLowerCase().includes("pages")) {
+                $(this).addClass("active");
+            }
+        });
+
+        $(document).ready(function () {
+            $('#orders').DataTable();
+        });
+    })
+</script>
+{%endblock%}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Details</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-top: 0;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-top: 0;
+    }
+
+    p {
+      margin-top: 0;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    strong {
+      font-weight: bold;
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    {% if data.picture %}
+    <img src="{{data.picture.url }}" alt="{{data.event_name }}" />
+    {% endif %}
+    <h1>{{data.event_name }}</h1>
+    <p>{{data.description }}</p>
+    <ul>
+      <li><strong>Location:</strong> {{data.event_location }}</li>
+      <li><strong>Date:</strong> {{data.event_start_date|date:"F j, Y" }} - {{data.event_end_date|date:"F j, Y" }}</li>
+      <li><strong>Time:</strong> {{data.event_start_time|time:"g:i A" }} - {{data.event_end_time|time:"g:i A" }}</li>
+      <li><strong>Topic:</strong> {{data.event_topic }}</li>
+      <li><strong>Type:</strong> {{data.event_type }}</li>
+      <li><strong>Registration:</strong> {% if data.registration_link %}<a href="{{data.registration_link }}" target="_blank">Register Now</a>{% else %}Not Required{% endif %}</li>
+      <li><strong>Attendance Link:</strong> {% if data.attendance_link %}<a href="{{data.attendance_link }}" target="_blank">Join Event</a>{% else %}Not Available{% endif %}</li>
+      <li><strong>Participants:</strong> {{data.participant_numbers }}</li>
+    </ul>
+  </div>
+</body>
+</html>

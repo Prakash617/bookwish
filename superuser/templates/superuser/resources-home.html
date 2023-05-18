@@ -1,0 +1,83 @@
+{%extends 'superuser-base.html'%}
+
+{%block title%} Resources | The Book Wishes Club {%endblock%}
+
+{%block main%}
+<div class="container">
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
+        Add New Resource For Home Page
+    </button>
+
+
+    <div class="data-center mt-5">
+        <div class="row">
+            {% for resource in all_resources %}
+            <div class="col-lg-4 mb-4">
+                <div class="title fw-bold mt-2 fs-5 mb-2 text-info">
+                    <span>{{resource.name}}</span>
+                    <span class="ms-2">
+                        <a class="text-danger" type="button" class="btn btn-primary" data-mdb-toggle="modal"
+                            data-mdb-target="#resources_{{resource.id}}">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </span>
+                </div>
+                {{resource.iframe_code | safe}}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Delete Confirm Modal -->
+<!-- Modal -->
+
+{% for resource in all_resources %}
+
+<div class="modal fade" id="resources_{{resource.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete common question <strong>"{{resource.name}}"</strong>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                <a href="/superuser/resources/{{resource.id}}/delete" type="button" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {%csrf_token%}
+                    {{resource_form}}
+                    <input name="resources_submit" type="submit" value="Save Resource"
+                        class="bg-primary border-0 text-white p-2 px-3 rounded-4">
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{%endblock%}
